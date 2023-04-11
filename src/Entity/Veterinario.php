@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\VeterinarioRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -46,6 +48,16 @@ class Veterinario
      * @ORM\Column(type="string", length=255)
      */
     private $direccion;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Cita::class, mappedBy="veterinario")
+     */
+    private $citas;
+
+    public function __construct()
+    {
+        $this->citas = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -120,6 +132,36 @@ class Veterinario
     public function setDireccion(string $direccion): self
     {
         $this->direccion = $direccion;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Cita>
+     */
+    public function getCitas(): Collection
+    {
+        return $this->citas;
+    }
+
+    public function addCita(Cita $cita): self
+    {
+        if (!$this->citas->contains($cita)) {
+            $this->citas[] = $cita;
+            $cita->setVeterinario($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCita(Cita $cita): self
+    {
+        if ($this->citas->removeElement($cita)) {
+            // set the owning side to null (unless already changed)
+            if ($cita->getVeterinario() === $this) {
+                $cita->setVeterinario(null);
+            }
+        }
 
         return $this;
     }

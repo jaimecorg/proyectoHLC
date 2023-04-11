@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\DuenioRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -41,6 +43,16 @@ class Duenio
      * @ORM\Column(type="string", length=255)
      */
     private $direccion;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Mascota::class, mappedBy="duenio")
+     */
+    private $mascota;
+
+    public function __construct()
+    {
+        $this->mascota = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -103,6 +115,36 @@ class Duenio
     public function setDireccion(string $direccion): self
     {
         $this->direccion = $direccion;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Mascota>
+     */
+    public function getMascota(): Collection
+    {
+        return $this->mascota;
+    }
+
+    public function addMascota(Mascota $mascota): self
+    {
+        if (!$this->mascota->contains($mascota)) {
+            $this->mascota[] = $mascota;
+            $mascota->setDuenio($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMascota(Mascota $mascota): self
+    {
+        if ($this->mascota->removeElement($mascota)) {
+            // set the owning side to null (unless already changed)
+            if ($mascota->getDuenio() === $this) {
+                $mascota->setDuenio(null);
+            }
+        }
 
         return $this;
     }

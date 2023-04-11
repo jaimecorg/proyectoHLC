@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MascotaRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +38,21 @@ class Mascota
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $fechaNacimiento;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Duenio::class, inversedBy="mascota")
+     */
+    private $duenio;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Cita::class, mappedBy="mascota")
+     */
+    private $citas;
+
+    public function __construct()
+    {
+        $this->citas = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -86,6 +103,48 @@ class Mascota
     public function setFechaNacimiento(?\DateTimeInterface $fechaNacimiento): self
     {
         $this->fechaNacimiento = $fechaNacimiento;
+
+        return $this;
+    }
+
+    public function getDuenio(): ?Duenio
+    {
+        return $this->duenio;
+    }
+
+    public function setDuenio(?Duenio $duenio): self
+    {
+        $this->duenio = $duenio;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Cita>
+     */
+    public function getCitas(): Collection
+    {
+        return $this->citas;
+    }
+
+    public function addCita(Cita $cita): self
+    {
+        if (!$this->citas->contains($cita)) {
+            $this->citas[] = $cita;
+            $cita->setMascota($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCita(Cita $cita): self
+    {
+        if ($this->citas->removeElement($cita)) {
+            // set the owning side to null (unless already changed)
+            if ($cita->getMascota() === $this) {
+                $cita->setMascota(null);
+            }
+        }
 
         return $this;
     }

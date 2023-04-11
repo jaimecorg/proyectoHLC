@@ -22,6 +22,11 @@ class Cita
      */
     private $fecha;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Mascota::class, inversedBy="citas")
+     */
+    private $mascota;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -35,6 +40,18 @@ class Cita
     public function setFecha(\DateTimeInterface $fecha): self
     {
         $this->fecha = $fecha;
+
+        return $this;
+    }
+
+    public function getMascota(): ?Mascota
+    {
+        return $this->mascota;
+    }
+
+    public function setMascota(?Mascota $mascota): self
+    {
+        $this->mascota = $mascota;
 
         return $this;
     }

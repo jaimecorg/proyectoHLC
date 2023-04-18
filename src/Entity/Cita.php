@@ -6,6 +6,7 @@ use App\Repository\CitaRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Traversable;
 
 /**
  * @ORM\Entity(repositoryClass=CitaRepository::class)
@@ -76,9 +77,9 @@ class Cita
     /**
      * @return Collection<int, Tratamiento>
      */
-    public function getTratamientos(): Collection
+    public function getTratamientos(): array
     {
-        return $this->tratamientos;
+        return $this->tratamientos->toArray();
     }
 
     public function addTratamiento(Tratamiento $tratamiento): self

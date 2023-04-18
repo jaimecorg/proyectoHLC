@@ -47,11 +47,11 @@ class Duenio
     /**
      * @ORM\OneToMany(targetEntity=Mascota::class, mappedBy="duenio")
      */
-    private $mascota;
+    private $mascotas;
 
     public function __construct()
     {
-        $this->mascota = new ArrayCollection();
+        $this->mascotas = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -124,13 +124,19 @@ class Duenio
      */
     public function getMascota(): Collection
     {
-        return $this->mascota;
+        return $this->mascotas;
+    }
+    public function setMascotas(Collection $mascotas): self
+    {
+        $this->mascotas = $mascotas;
+
+        return $this;
     }
 
     public function addMascota(Mascota $mascota): self
     {
-        if (!$this->mascota->contains($mascota)) {
-            $this->mascota[] = $mascota;
+        if (!$this->mascotas->contains($mascota)) {
+            $this->mascotas[] = $mascota;
             $mascota->setDuenio($this);
         }
 
@@ -139,7 +145,7 @@ class Duenio
 
     public function removeMascota(Mascota $mascota): self
     {
-        if ($this->mascota->removeElement($mascota)) {
+        if ($this->mascotas->removeElement($mascota)) {
             // set the owning side to null (unless already changed)
             if ($mascota->getDuenio() === $this) {
                 $mascota->setDuenio(null);

@@ -40,7 +40,7 @@ class Mascota
     private $fechaNacimiento;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Duenio::class, inversedBy="mascota")
+     * @ORM\ManyToOne(targetEntity=Duenio::class, inversedBy="mascotas")
      */
     private $duenio;
 
@@ -100,8 +100,12 @@ class Mascota
         return $this->fechaNacimiento;
     }
 
-    public function setFechaNacimiento(?\DateTimeInterface $fechaNacimiento): self
+    public function setFechaNacimiento(\DateTimeInterface|string|null $fechaNacimiento): self
     {
+        if (is_string($fechaNacimiento)) {
+            $fechaNacimiento = date_create($fechaNacimiento);
+        }
+
         $this->fechaNacimiento = $fechaNacimiento;
 
         return $this;

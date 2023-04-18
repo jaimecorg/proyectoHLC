@@ -75,4 +75,14 @@ class DuenioRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findAllOrdenados()
+    {
+        return $this->createQueryBuilder('d')
+            ->addSelect('n')
+            ->leftJoin('d.nombre', 'n')
+            ->orderBy('d.nombre')
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Listado de dueños </h1>
+        <a href="{{ path('duenio_nuevo') }}">Nuevo dueño</a>
+    <table>
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Correo</th>
+            <th>Teléfono</th>
+            <th>Dirección</th>
+            <th>Mascotas</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for duenio in duenios %}
+                <tr>
+                    <td>{{ duenio.nombre }}</td>
+                    <td>{{ duenio.apellidos }}</td>
+                    <td>{{ duenio.correo }}</td>
+                    <td>{{ duenio.telefono  }}</td>
+                    <td>{{ duenio.direccion  }}</td>
+                    <td>{{ duenio.mascotas }}</td>
+                    <td><a href="{{ path('duenio_form', {'id': duenio.id}) }}">Modificar</a></td>
+                </tr>
+            {% else %}
+                <tr>
+                    <th colspan="5">No hay dueños</th>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

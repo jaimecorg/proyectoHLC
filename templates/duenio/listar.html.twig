@@ -2,7 +2,9 @@
 
 {% block body %}
     <h1>Listado de dueños </h1>
-        <a href="{{ path('duenio_nuevo') }}">Nuevo dueño</a>
+
+    <a href="{{ path('duenio_nuevo') }}" class="btn btn-success">Nuevo dueño</a>
+
     <table>
         <thead>
         <tr>
@@ -12,6 +14,7 @@
             <th>Teléfono</th>
             <th>Dirección</th>
             <th>Mascotas</th>
+            <th></th>
             <th></th>
         </tr>
         </thead>
@@ -23,8 +26,20 @@
                     <td>{{ duenio.correo }}</td>
                     <td>{{ duenio.telefono  }}</td>
                     <td>{{ duenio.direccion  }}</td>
-                    <td>{{ duenio.mascotas }}</td>
-                    <td><a href="{{ path('duenio_form', {'id': duenio.id}) }}">Modificar</a></td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Mascotas
+                            </button>
+                            <ul class="dropdown-menu">
+                                {% for mascota in duenio.mascota %}
+                                    <li><a class="dropdown-item" href="#">{{ mascota.nombre }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </td>
+                    <td><a href="{{ path('duenio_modificar', {'id': duenio.id}) }}" class="btn btn-info">Modificar</a></td>
+                    <td><a href="{{ path('duenio_eliminar', {'id': duenio.id}) }}" class="btn btn-danger">Eliminar</a></td>
                 </tr>
             {% else %}
                 <tr>

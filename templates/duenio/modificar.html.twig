@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% if duenio.id %}
+        <h1>Modificar dueño</h1>
+    {% else %}
+        <h1>Registrar dueño</h1>
+    {% endif %}
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+
+    <a href="{{ path('duenio_listar') }}" class="btn btn-info"><i class="bi bi-box-arrow-up-left"></i> Volver al listado</a>
+    <button type="submit" class="btn btn-success">Guardar cambios</button>
+
+    {% if duenio.id %}
+        <a href="{{ path('duenio_eliminar', {'id': duenio.id}) }}" class="btn btn-danger"><i class="bi bi-trash"></i> Eliminar dueño</a>
+    {% endif %}
+
+    {{ form_end(form) }}
+
+{% endblock %}

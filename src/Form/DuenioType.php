@@ -17,7 +17,6 @@ class DuenioType extends AbstractType
             ->add('correo')
             ->add('telefono')
             ->add('direccion')
-            ->add('mascotas')
         ;
     }
     public function configureOptions(OptionsResolver $resolver)

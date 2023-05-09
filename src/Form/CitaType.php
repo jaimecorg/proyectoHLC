@@ -2,26 +2,23 @@
 
 namespace App\Form;
 
-use App\Entity\Mascota;
+use App\Entity\Cita;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class MascotaType extends AbstractType
+class CitaType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nombre')
-            ->add('especie')
-            ->add('raza')
-            ->add('fechaNacimiento')
+            ->add('fecha')
         ;
     }
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Mascota::class,
+            'data_class' => Cita::class,
         ]);
     }
 }

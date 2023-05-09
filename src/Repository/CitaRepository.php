@@ -75,4 +75,12 @@ class CitaRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findAllOrdenadas()
+    {
+        return $this->createQueryBuilder('c')
+            ->orderBy('c.fecha')
+            ->getQuery()
+            ->getResult();
+    }
 }

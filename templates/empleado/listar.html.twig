@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Listado de empleados </h1>
+
+    <a href="{{ path('empleado_nuevo') }}" class="btn btn-success">Nuevo empleado</a>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Usuario</th>
+            <th>Clave</th>
+            <th>Permisos</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for empleado in empleados %}
+                <tr>
+                    <td>{{ empleado.nombre }}</td>
+                    <td>{{ empleado.apellidos }}</td>
+                    <td>{{ empleado.correo }}</td>
+                    <td><a href="{{ path('empleado_modificar', {'id': empleado.id}) }}" class="btn btn-info">Modificar</a></td>
+                    <td><a href="{{ path('empleado_eliminar', {'id': empleado.id}) }}" class="btn btn-danger">Eliminar</a></td>
+                </tr>
+            {% else %}
+                <tr>
+                    <th colspan="5">No hay empleados</th>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

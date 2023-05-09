@@ -75,4 +75,12 @@ class EmpleadoRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findAllOrdenados()
+    {
+        return $this->createQueryBuilder('e')
+            ->orderBy('e.usuario')
+            ->getQuery()
+            ->getResult();
+    }
 }

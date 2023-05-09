@@ -75,4 +75,12 @@ class VeterinarioRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findAllOrdenados()
+    {
+        return $this->createQueryBuilder('v')
+            ->orderBy('v.nombre')
+            ->getQuery()
+            ->getResult();
+    }
 }

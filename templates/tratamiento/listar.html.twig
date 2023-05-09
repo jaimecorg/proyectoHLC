@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Listado de tratamientos </h1>
+
+    <a href="{{ path('tratamiento_nuevo') }}" class="btn btn-success">Nuevo tratamiento</a>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for tratamiento in tratamientos %}
+                <tr>
+                    <td>{{ tratamiento.nombre }}</td>
+                    <td>{{ tratamiento.descripcion }}</td>
+                    </td>
+                    <td><a href="{{ path('tratamiento_modificar', {'id': tratamiento.id}) }}" class="btn btn-info">Modificar</a></td>
+                    <td><a href="{{ path('tratamiento_eliminar', {'id': tratamiento.id}) }}" class="btn btn-danger">Eliminar</a></td>
+                </tr>
+            {% else %}
+                <tr>
+                    <th colspan="5">No hay tratamientos</th>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -75,4 +75,12 @@ class TratamientoRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findAllOrdenados()
+    {
+        return $this->createQueryBuilder('t')
+            ->orderBy('t.nombre')
+            ->getQuery()
+            ->getResult();
+    }
+
 }

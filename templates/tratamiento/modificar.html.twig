@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% if tratamiento.id %}
+        <h1>Modificar tratamiento</h1>
+    {% else %}
+        <h1>Registrar tratamiento</h1>
+    {% endif %}
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+
+    <a href="{{ path('tratamiento_listar') }}" class="btn btn-info"><i class="bi bi-box-arrow-up-left"></i> Volver al listado</a>
+    <button type="submit" class="btn btn-success">Guardar cambios</button>
+
+    {% if tratamiento.id %}
+        <a href="{{ path('tratamiento_eliminar', {'id': tratamiento.id}) }}" class="btn btn-danger"><i class="bi bi-trash"></i> Eliminar tratamiento</a>
+    {% endif %}
+
+    {{ form_end(form) }}
+
+{% endblock %}

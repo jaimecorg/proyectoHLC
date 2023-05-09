@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>Eliminar mascota</h1>
+
+    <div class="alert alert-warning">
+        ¿Está seguro de que desea eliminar la mascota {{ mascota.nombre }}? La operación no se puede deshacer.
+    </div>
+    <form method="post">
+        <a href="{{ path('mascota_modificar', {'id': mascota.id}) }}" class="btn btn-info"><i class="bi bi-box-arrow-up-left"></i> Volver a la mascota</a>
+        <button type="submit" name="confirmar" value="ok" class="btn btn-danger"><i class="bi bi-trash"></i> Confirmar eliminación</button>
+    </form>
+
+{% endblock %}

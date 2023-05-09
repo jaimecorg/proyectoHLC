@@ -75,4 +75,12 @@ class MascotaRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findAllOrdenadas()
+    {
+        return $this->createQueryBuilder('m')
+            ->orderBy('m.nombre')
+            ->getQuery()
+            ->getResult();
+    }
 }

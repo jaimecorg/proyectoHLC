@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Listado de mascotas </h1>
+
+    <a href="{{ path('mascota_nueva') }}" class="btn btn-success">Nueva mascota</a>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Especie</th>
+            <th>Raza</th>
+            <th>Fecha nacimiento</th>
+            <th>Dueñ@</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for mascota in mascotas %}
+                <tr>
+                    <td>{{ mascota.nombre }}</td>
+                    <td>{{ mascota.especie }}</td>
+                    <td>{{ mascota.raza }}</td>
+                    <td>{{ mascota.fechaNacimiento ? mascota.fechaNacimiento | date('d/m/Y') }}</td>
+                    <td>
+                        {% for duenio in mascota.duenio %}
+                            <li>{{ duenio.nombre }}</li>
+                        {% endfor %}
+                    </td>
+                    <td><a href="{{ path('mascota_modificar', {'id': mascota.id}) }}" class="btn btn-info">Modificar</a></td>
+                    <td><a href="{{ path('mascota_eliminar', {'id': mascota.id}) }}" class="btn btn-danger">Eliminar</a></td>
+                </tr>
+            {% else %}
+                <tr>
+                    <th colspan="5">No hay mascotas</th>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

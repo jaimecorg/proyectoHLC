@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% if mascota.id %}
+        <h1>Modificar mascota</h1>
+    {% else %}
+        <h1>Registrar mascota</h1>
+    {% endif %}
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+
+    <a href="{{ path('mascota_listar') }}" class="btn btn-info"><i class="bi bi-box-arrow-up-left"></i> Volver al listado</a>
+    <button type="submit" class="btn btn-success">Guardar cambios</button>
+
+    {% if mascota.id %}
+        <a href="{{ path('mascota_eliminar', {'id': mascota.id}) }}" class="btn btn-danger"><i class="bi bi-trash"></i> Eliminar mascota</a>
+    {% endif %}
+
+    {{ form_end(form) }}
+
+{% endblock %}

@@ -33,7 +33,7 @@
                             </button>
                             <ul class="dropdown-menu">
                                 {% for mascota in duenio.mascota %}
-                                    <li><a class="dropdown-item" href="#">{{ mascota.nombre }}</a></li>
+                                    <li><a class="dropdown-item" href="{{ path('mascota_modificar', {'id': mascota.id}) }}">{{ mascota.nombre }}</a></li>
                                 {% endfor %}
                             </ul>
                         </div>

@@ -5,11 +5,12 @@ namespace App\Entity;
 use App\Repository\EmpleadoRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=EmpleadoRepository::class)
  */
-class Empleado
+class Empleado implements UserInterface
 {
     /**
      * @ORM\Id
@@ -38,6 +39,16 @@ class Empleado
      * @Assert\Length(max=255)
      */
     private $permisos;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $administrador;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $moderador;
 
     public function getId(): ?int
     {
@@ -78,5 +89,61 @@ class Empleado
         $this->permisos = $permisos;
 
         return $this;
+    }
+
+    public function getAdministrador()
+    {
+        return $this->administrador;
+    }
+
+    public function setAdministrador($administrador)
+    {
+        $this->administrador = $administrador;
+        return $this;
+    }
+
+    public function getModerador()
+    {
+        return $this->moderador;
+    }
+
+    public function setModerador($moderador)
+    {
+        $this->moderador = $moderador;
+        return $this;
+    }
+
+    public function getRoles()
+    {
+        $roles = ['ROLE_USUARIO'];
+
+        if ($this->getAdministrador()) {
+            $roles[] = 'ROLE_ADMIN';
+        }
+
+        if ($this->getModerador()) {
+            $roles[] = 'ROLE_MODERADOR';
+        }
+
+        return $roles;
+    }
+
+    public function getPassword()
+    {
+        return $this->clave;
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function getUsername()
+    {
+        return $this->getUsuario();
+    }
+
+    public function eraseCredentials()
+    {
     }
 }

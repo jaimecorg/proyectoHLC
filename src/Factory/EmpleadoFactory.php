@@ -49,7 +49,9 @@ final class EmpleadoFactory extends ModelFactory
         return [
             'usuario' => self::faker()->userName(),
             'clave' => self::faker()->password(),
-            'permisos' => self::faker()->email()
+            'permisos' => self::faker()->email(),
+            'administrador' => false,
+            'moderador' => false,
         ];
     }
 

@@ -38,6 +38,8 @@ class DuenioController extends AbstractController
      */
     public function modificar(Request $request, DuenioRepository $duenioRepository, Duenio $duenio) : Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USUARIO');
+
         $form = $this->createForm(DuenioType::class, $duenio);
         $form->handleRequest($request);
 

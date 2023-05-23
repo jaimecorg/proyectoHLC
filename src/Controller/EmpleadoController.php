@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Duenio;
-use App\Form\DuenioType;
-use App\Repository\DuenioRepository;
+use App\Entity\Empleado;
+use App\Form\EmpleadoType;
+use App\Repository\EmpleadoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,43 +15,43 @@ class EmpleadoController extends AbstractController
     /**
      * @Route("/empleado", name="empleado_listar")
      */
-    public function listar(DuenioRepository $duenioRepository) : Response
+    public function listar(EmpleadoRepository $repository) : Response
     {
-        $duenios = $duenioRepository->findAllOrdenados();
+        $empleados = $repository->findAllOrdenados();
         return $this->render('empleado/listar.html.twig', [
-            'empleados' => $duenios
+            'empleados' => $empleados
         ]);
     }
 
     /**
      * @Route("/empleado/nuevo", name="empleado_nuevo")
      */
-    public function nuevo(Request $request, DuenioRepository $duenioRepository) : Response
+    public function nuevo(Request $request, EmpleadoRepository $repository) : Response
     {
-        $duenio = new Duenio();
+        $empleado = new Empleado();
 
-        return $this->modificar($request, $duenioRepository, $duenio);
+        return $this->modificar($request, $repository, $empleado);
     }
 
     /**
      * @Route("/empleado/{id}", name="empleado_modificar")
      */
-    public function modificar(Request $request, DuenioRepository $duenioRepository, Duenio $duenio) : Response
+    public function modificar(Request $request, EmpleadoRepository $repository, Empleado $empleado) : Response
     {
-        $form = $this->createForm(DuenioType::class, $duenio);
+        $form = $this->createForm(EmpleadoType::class, $empleado);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $duenioRepository->add($duenio);
+                $repository->add($empleado);
                 $this->addFlash('success', 'Cambios guardados con éxito');
-                return $this->redirectToRoute('duenio_listar');
+                return $this->redirectToRoute('empleado_listar');
             } catch (\Exception $e) {
                 $this->addFlash('error', 'Error al guardar los cambios');
             }
         }
         return $this->render('empleado/modificar.html.twig', [
-            'empleado' => $duenio,
+            'empleado' => $empleado,
             'form' => $form->createView()
         ]);
     }
@@ -59,19 +59,19 @@ class EmpleadoController extends AbstractController
     /**
      * @Route("/empleado/eliminar/{id}", name="empleado_eliminar")
      */
-    public function eliminar(Request $request, DuenioRepository $duenioRepository, Duenio $duenio) : Response
+    public function eliminar(Request $request, EmpleadoRepository $repository, Empleado $empleado) : Response
     {
         if ($request->getMethod() === 'POST' && $request->get('confirmar') === 'ok') {
             try {
-                $duenioRepository->remove($duenio);
-                $this->addFlash('success', 'Dueño eliminado con éxito');
-                return $this->redirectToRoute('duenio_listar');
+                $repository->remove($empleado);
+                $this->addFlash('success', 'Empleado eliminado con éxito');
+                return $this->redirectToRoute('empleado_listar');
             } catch (\Exception $e) {
-                $this->addFlash('error', 'Error al eliminar el dueño');
+                $this->addFlash('error', 'Error al eliminar el empleado');
             }
         }
-        return $this->render('duenio/eliminar.html.twig', [
-            'duenio' => $duenio
+        return $this->render('empleado/eliminar.html.twig', [
+            'empleado' => $empleado
         ]);
     }
 }

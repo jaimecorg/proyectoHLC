@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\EmpleadoRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=EmpleadoRepository::class)
@@ -19,16 +20,22 @@ class Empleado
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=255)
      */
     private $usuario;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=255)
      */
     private $clave;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=255)
      */
     private $permisos;
 

@@ -6,6 +6,7 @@ use App\Repository\MascotaRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=MascotaRepository::class)
@@ -21,21 +22,29 @@ class Mascota
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=255)
      */
     private $nombre;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=255)
      */
     private $especie;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=255)
      */
     private $raza;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\NotBlank()
+     * @Assert\DateTime()
      */
     private $fechaNacimiento;
 

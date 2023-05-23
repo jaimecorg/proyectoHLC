@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Traversable;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CitaRepository::class)
@@ -22,21 +23,27 @@ class Cita
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank()
+     * @Assert\DateTime()
      */
     private $fecha;
 
     /**
      * @ORM\ManyToOne(targetEntity=Mascota::class, inversedBy="citas")
+     * @Assert\NotBlank()
      */
     private $mascota;
 
     /**
      * @ORM\ManyToMany(targetEntity=Tratamiento::class, inversedBy="citas")
+     * @Assert\NotBlank()
+     *
      */
     private $tratamientos;
 
     /**
      * @ORM\ManyToOne(targetEntity=Veterinario::class, inversedBy="citas")
+     * @Assert\NotBlank()
      */
     private $veterinario;
 

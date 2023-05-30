@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class EmpleadoController extends AbstractController
 {
@@ -81,4 +82,13 @@ class EmpleadoController extends AbstractController
             'empleado' => $empleado
         ]);
     }
+
+    /**
+     * @Route("/clave", name=“usuario_clave")
+     */
+    /*
+    public function indexAction(Request $request, UserPasswordEncoderInterface $passwordEncoder) {
+
+    }
+    */
 }

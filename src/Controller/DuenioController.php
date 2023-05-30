@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Duenio;
 use App\Form\DuenioType;
 use App\Repository\DuenioRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,10 +26,11 @@ class DuenioController extends AbstractController
 
     /**
      * @Route("/duenio/nuevo", name="duenio_nuevo")
+     * @Security("is_granted('ROLE_USUARIO')")
      */
     public function nuevo(Request $request, DuenioRepository $duenioRepository) : Response
     {
-        $this->denyAccessUnlessGranted('ROLE_USUARIO');
+        //$this->denyAccessUnlessGranted('ROLE_USUARIO');
 
         $duenio = new Duenio();
 
@@ -37,10 +39,11 @@ class DuenioController extends AbstractController
 
     /**
      * @Route("/duenio/{id}", name="duenio_modificar")
+     * @Security("is_granted('ROLE_MODERADOR')")
      */
     public function modificar(Request $request, DuenioRepository $duenioRepository, Duenio $duenio) : Response
     {
-        $this->denyAccessUnlessGranted('ROLE_MODERADOR');
+        //$this->denyAccessUnlessGranted('ROLE_MODERADOR');
 
         $form = $this->createForm(DuenioType::class, $duenio);
         $form->handleRequest($request);

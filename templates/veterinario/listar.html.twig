@@ -3,7 +3,9 @@
 {% block body %}
     <h1>Listado de veterinarios </h1>
 
-    <a href="{{ path('veterinario_nuevo') }}" class="btn btn-success">Nuevo veterinario</a>
+    {% if is_granted('ROLE_USUARIO') %}
+        <a href="{{ path('veterinario_nuevo') }}" class="btn btn-success">Nuevo veterinario</a>
+    {% endif %}
 
     <table>
         <thead>
@@ -27,8 +29,12 @@
                     <td>{{ veterinario.correo }}</td>
                     <td>{{ veterinario.telefono  }}</td>
                     <td>{{ veterinario.direccion  }}</td>
-                    <td><a href="{{ path('veterinario_modificar', {'id': veterinario.id}) }}" class="btn btn-info">Modificar</a></td>
-                    <td><a href="{{ path('veterinario_eliminar', {'id': veterinario.id}) }}" class="btn btn-danger">Eliminar</a></td>
+                    {% if is_granted('ROLE_MODERADOR') %}
+                        <td><a href="{{ path('veterinario_modificar', {'id': veterinario.id}) }}" class="btn btn-info">Modificar</a></td>
+                    {% endif %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <td><a href="{{ path('veterinario_eliminar', {'id': veterinario.id}) }}" class="btn btn-danger">Eliminar</a></td>
+                    {% endif %}
                 </tr>
             {% else %}
                 <tr>

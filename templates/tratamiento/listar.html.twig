@@ -3,7 +3,9 @@
 {% block body %}
     <h1>Listado de tratamientos </h1>
 
-    <a href="{{ path('tratamiento_nuevo') }}" class="btn btn-success">Nuevo tratamiento</a>
+    {% if is_granted('ROLE_USUARIO') %}
+        <a href="{{ path('tratamiento_nuevo') }}" class="btn btn-success">Nuevo tratamiento</a>
+    {% endif %}
 
     <table>
         <thead>
@@ -20,8 +22,12 @@
                     <td>{{ tratamiento.nombre }}</td>
                     <td>{{ tratamiento.descripcion }}</td>
                     </td>
-                    <td><a href="{{ path('tratamiento_modificar', {'id': tratamiento.id}) }}" class="btn btn-info">Modificar</a></td>
-                    <td><a href="{{ path('tratamiento_eliminar', {'id': tratamiento.id}) }}" class="btn btn-danger">Eliminar</a></td>
+                    {% if is_granted('ROLE_MODERADOR') %}
+                        <td><a href="{{ path('tratamiento_modificar', {'id': tratamiento.id}) }}" class="btn btn-info">Modificar</a></td>
+                    {% endif %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <td><a href="{{ path('tratamiento_eliminar', {'id': tratamiento.id}) }}" class="btn btn-danger">Eliminar</a></td>
+                    {% endif %}
                 </tr>
             {% else %}
                 <tr>

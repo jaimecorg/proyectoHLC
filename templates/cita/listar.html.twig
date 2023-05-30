@@ -3,7 +3,9 @@
 {% block body %}
     <h1>Listado de citas </h1>
 
-    <a href="{{ path('cita_nueva') }}" class="btn btn-success">Nueva cita</a>
+    {% if is_granted('ROLE_USUARIO') %}
+        <a href="{{ path('cita_nueva') }}" class="btn btn-success">Nueva cita</a>
+    {% endif %}
 
     <table>
         <thead>
@@ -23,8 +25,12 @@
                     <td>{{ cita.mascota.nombre }}</td>
                     <td>{{ cita.veterinario.nombre ~ " " ~ cita.veterinario.apellidos }}</td>
                     <td>{{ cita.fecha ? cita.fecha | date('d/m/Y') }}</td>
-                    <td><a href="{{ path('cita_modificar', {'id': cita.id}) }}" class="btn btn-info">Modificar</a></td>
-                    <td><a href="{{ path('cita_eliminar', {'id': cita.id}) }}" class="btn btn-danger">Eliminar</a></td>
+                    {% if is_granted('ROLE_MODERADOR') %}
+                        <td><a href="{{ path('cita_modificar', {'id': cita.id}) }}" class="btn btn-info">Modificar</a></td>
+                    {% endif %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <td><a href="{{ path('cita_eliminar', {'id': cita.id}) }}" class="btn btn-danger">Eliminar</a></td>
+                    {% endif %}
                 </tr>
             {% else %}
                 <tr>

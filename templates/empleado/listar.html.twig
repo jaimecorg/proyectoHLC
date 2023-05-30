@@ -21,8 +21,12 @@
                     <td>{{ empleado.usuario }}</td>
                     <td>{{ empleado.clave }}</td>
                     <td>{{ empleado.permisos }}</td>
-                    <td><a href="{{ path('empleado_modificar', {'id': empleado.id}) }}" class="btn btn-info">Modificar</a></td>
-                    <td><a href="{{ path('empleado_eliminar', {'id': empleado.id}) }}" class="btn btn-danger">Eliminar</a></td>
+                    {% if is_granted('ROLE_MODERADOR') %}
+                        <td><a href="{{ path('empleado_modificar', {'id': empleado.id}) }}" class="btn btn-info">Modificar</a></td>
+                    {% endif %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <td><a href="{{ path('empleado_eliminar', {'id': empleado.id}) }}" class="btn btn-danger">Eliminar</a></td>
+                    {% endif %}
                 </tr>
             {% else %}
                 <tr>

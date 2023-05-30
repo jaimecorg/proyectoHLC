@@ -3,7 +3,9 @@
 {% block body %}
     <h1>Listado de mascotas </h1>
 
-    <a href="{{ path('mascota_nueva') }}" class="btn btn-success">Nueva mascota</a>
+    {% if is_granted('ROLE_USUARIO') %}
+        <a href="{{ path('mascota_nueva') }}" class="btn btn-success">Nueva mascota</a>
+    {% endif %}
 
     <table>
         <thead>
@@ -29,8 +31,12 @@
                             <li>{{ duenio.nombre }}</li>
                         {% endfor %}
                     </td>
-                    <td><a href="{{ path('mascota_modificar', {'id': mascota.id}) }}" class="btn btn-info">Modificar</a></td>
-                    <td><a href="{{ path('mascota_eliminar', {'id': mascota.id}) }}" class="btn btn-danger">Eliminar</a></td>
+                    {% if is_granted('ROLE_MODERADOR') %}
+                        <td><a href="{{ path('mascota_modificar', {'id': mascota.id}) }}" class="btn btn-info">Modificar</a></td>
+                    {% endif %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <td><a href="{{ path('mascota_eliminar', {'id': mascota.id}) }}" class="btn btn-danger">Eliminar</a></td>
+                    {% endif %}
                 </tr>
             {% else %}
                 <tr>

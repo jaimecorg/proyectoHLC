@@ -28,6 +28,8 @@ class DuenioController extends AbstractController
      */
     public function nuevo(Request $request, DuenioRepository $duenioRepository) : Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USUARIO');
+
         $duenio = new Duenio();
 
         return $this->modificar($request, $duenioRepository, $duenio);
@@ -38,7 +40,7 @@ class DuenioController extends AbstractController
      */
     public function modificar(Request $request, DuenioRepository $duenioRepository, Duenio $duenio) : Response
     {
-        $this->denyAccessUnlessGranted('ROLE_USUARIO');
+        $this->denyAccessUnlessGranted('ROLE_MODERADOR');
 
         $form = $this->createForm(DuenioType::class, $duenio);
         $form->handleRequest($request);
@@ -63,6 +65,8 @@ class DuenioController extends AbstractController
      */
     public function eliminar(Request $request, DuenioRepository $duenioRepository, Duenio $duenio) : Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         if ($request->getMethod() === 'POST' && $request->get('confirmar') === 'ok') {
             try {
                 $duenioRepository->remove($duenio);

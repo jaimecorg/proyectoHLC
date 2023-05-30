@@ -8,6 +8,7 @@ use App\Form\CitaType;
 use App\Form\MascotaType;
 use App\Repository\CitaRepository;
 use App\Repository\MascotaRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,6 +29,7 @@ class CitaController extends AbstractController
 
     /**
      * @Route("/cita/nueva", name="cita_nueva")
+     * @Security("is_granted('ROLE_USUARIO')")
      */
     public function nueva(Request $request, CitaRepository $repository) : Response
     {
@@ -38,6 +40,7 @@ class CitaController extends AbstractController
 
     /**
      * @Route("/cita/{id}", name="cita_modificar")
+     * @Security("is_granted('ROLE_MODERADOR')")
      */
     public function modificar(Request $request, CitaRepository $repository, Cita $cita) : Response
     {
@@ -64,6 +67,8 @@ class CitaController extends AbstractController
      */
     public function eliminar(Request $request, CitaRepository $repository, Cita $cita) : Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         if ($request->getMethod() === 'POST' && $request->get('confirmar') === 'ok') {
             try {
                 $repository->remove($cita);
@@ -73,6 +78,7 @@ class CitaController extends AbstractController
                 $this->addFlash('error', 'Error al eliminar la cita');
             }
         }
+
         return $this->render('cita/eliminar.html.twig', [
             'cita' => $cita
         ]);

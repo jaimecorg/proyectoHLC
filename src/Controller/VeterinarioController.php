@@ -3,9 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Veterinario;
-use App\Form\DuenioType;
 use App\Form\VeterinarioType;
 use App\Repository\VeterinarioRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,6 +26,7 @@ class VeterinarioController extends AbstractController
 
     /**
      * @Route("/veterinario/nuevo", name="veterinario_nuevo")
+     * @Security("is_granted('ROLE_USUARIO')")
      */
     public function nuevo(Request $request, VeterinarioRepository $veterinarioRepository) : Response
     {
@@ -36,6 +37,7 @@ class VeterinarioController extends AbstractController
 
     /**
      * @Route("/veterinario/{id}", name="veterinario_modificar")
+     * @Security("is_granted('ROLE_MODERADOR')")
      */
     public function modificar(Request $request, VeterinarioRepository $veterinarioRepository, Veterinario $veterinario) : Response
     {
@@ -62,6 +64,8 @@ class VeterinarioController extends AbstractController
      */
     public function eliminar(Request $request, VeterinarioRepository $veterinarioRepository, Veterinario $veterinario) : Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         if ($request->getMethod() === 'POST' && $request->get('confirmar') === 'ok') {
             try {
                 $veterinarioRepository->remove($veterinario);

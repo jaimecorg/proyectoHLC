@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Tratamiento;
 use App\Form\TratamientoType;
 use App\Repository\TratamientoRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,6 +26,7 @@ class TratamientoController extends AbstractController
 
     /**
      * @Route("/tratamiento/nuevo", name="tratamiento_nuevo")
+     * @Security("is_granted('ROLE_USUARIO')")
      */
     public function nuevo(Request $request, TratamientoRepository $repository) : Response
     {
@@ -35,6 +37,7 @@ class TratamientoController extends AbstractController
 
     /**
      * @Route("/tratamiento/{id}", name="tratamiento_modificar")
+     * @Security("is_granted('ROLE_MODERADOR')")
      */
     public function modificar(Request $request, TratamientoRepository $repository, Tratamiento $tratamiento) : Response
     {
@@ -61,6 +64,8 @@ class TratamientoController extends AbstractController
      */
     public function eliminar(Request $request, TratamientoRepository $repository, Tratamiento $tratamiento) : Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         if ($request->getMethod() === 'POST' && $request->get('confirmar') === 'ok') {
             try {
                 $repository->remove($tratamiento);
@@ -70,6 +75,7 @@ class TratamientoController extends AbstractController
                 $this->addFlash('error', 'Error al eliminar el tratamiento');
             }
         }
+
         return $this->render('tratamiento/eliminar.html.twig', [
             'tratamiento' => $tratamiento
         ]);

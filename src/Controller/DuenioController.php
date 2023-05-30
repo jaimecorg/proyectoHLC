@@ -57,6 +57,7 @@ class DuenioController extends AbstractController
                 $this->addFlash('error', 'Error al guardar los cambios');
             }
         }
+
         return $this->render('duenio/modificar.html.twig', [
             'duenio' => $duenio,
             'form' => $form->createView()
@@ -79,6 +80,7 @@ class DuenioController extends AbstractController
                 $this->addFlash('error', 'Error al eliminar el dueño');
             }
         }
+
         return $this->render('duenio/eliminar.html.twig', [
             'duenio' => $duenio
         ]);

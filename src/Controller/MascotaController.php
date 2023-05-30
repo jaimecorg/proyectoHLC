@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Mascota;
 use App\Form\MascotaType;
 use App\Repository\MascotaRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,6 +26,7 @@ class MascotaController extends AbstractController
 
     /**
      * @Route("/mascota/nueva", name="mascota_nueva")
+     * @Security("is_granted('ROLE_USUARIO')")
      */
     public function nueva(Request $request, MascotaRepository $mascotaRepository) : Response
     {
@@ -35,6 +37,7 @@ class MascotaController extends AbstractController
 
     /**
      * @Route("/mascota/{id}", name="mascota_modificar")
+     * @Security("is_granted('ROLE_MODERADOR')")
      */
     public function modificar(Request $request, MascotaRepository $mascotaRepository, Mascota $mascota) : Response
     {
@@ -61,6 +64,8 @@ class MascotaController extends AbstractController
      */
     public function eliminar(Request $request, MascotaRepository $mascotaRepository, Mascota $mascota) : Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         if ($request->getMethod() === 'POST' && $request->get('confirmar') === 'ok') {
             try {
                 $mascotaRepository->remove($mascota);

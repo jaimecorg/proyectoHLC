@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Empleado;
 use App\Form\EmpleadoType;
 use App\Repository\EmpleadoRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,6 +26,7 @@ class EmpleadoController extends AbstractController
 
     /**
      * @Route("/empleado/nuevo", name="empleado_nuevo")
+     * @Security("is_granted('ROLE_USUARIO')")
      */
     public function nuevo(Request $request, EmpleadoRepository $repository) : Response
     {
@@ -35,6 +37,7 @@ class EmpleadoController extends AbstractController
 
     /**
      * @Route("/empleado/{id}", name="empleado_modificar")
+     * @Security("is_granted('ROLE_MODERADOR')")
      */
     public function modificar(Request $request, EmpleadoRepository $repository, Empleado $empleado) : Response
     {
@@ -50,6 +53,7 @@ class EmpleadoController extends AbstractController
                 $this->addFlash('error', 'Error al guardar los cambios');
             }
         }
+
         return $this->render('empleado/modificar.html.twig', [
             'empleado' => $empleado,
             'form' => $form->createView()
@@ -61,6 +65,8 @@ class EmpleadoController extends AbstractController
      */
     public function eliminar(Request $request, EmpleadoRepository $repository, Empleado $empleado) : Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         if ($request->getMethod() === 'POST' && $request->get('confirmar') === 'ok') {
             try {
                 $repository->remove($empleado);
@@ -70,6 +76,7 @@ class EmpleadoController extends AbstractController
                 $this->addFlash('error', 'Error al eliminar el empleado');
             }
         }
+
         return $this->render('empleado/eliminar.html.twig', [
             'empleado' => $empleado
         ]);

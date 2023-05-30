@@ -126,6 +126,13 @@ class Empleado implements UserInterface
         }
 
         return $roles;
+
+        /*
+            ADMIN: borra
+            MODERADOR: modifica
+            USUARIO: crea
+            No Usuario: solo lista
+        */
     }
 
     public function getPassword()

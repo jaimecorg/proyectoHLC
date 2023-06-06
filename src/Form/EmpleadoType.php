@@ -19,34 +19,6 @@ class EmpleadoType extends AbstractType
             ->add('usuario')
             ->add('clave')
             ->add('permisos')
-            ->add('claveAntigua', PasswordType::class, [
-                'label' => 'Contraseña actual',
-                'required' => false,
-                'mapped' => false,
-                'constraints' => [
-                    new UserPassword(),
-                    new NotBlank()
-                ]
-            ])
-            ->add('nuevaClave', RepeatedType::class, [
-                'label' => 'Nueva contraseña',
-                'required' => true,
-                'type' => PasswordType::class,
-                'mapped' => false,
-                'invalid_message' => 'No coinciden las contraseñas',
-                'first_options' => [
-                    'label' => 'Nueva contraseña',
-                    'constraints' => [
-                        new NotBlank([
-                            'groups' => ['password']
-                        ])
-                    ]
-                ],
-                'second_options' => [
-                    'label' => 'Repite nueva contraseña',
-                    'required' => true
-                ]
-            ])
         ;
     }
     public function configureOptions(OptionsResolver $resolver)

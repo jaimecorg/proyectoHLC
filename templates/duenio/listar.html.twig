@@ -30,19 +30,18 @@
                     <td>{{ duenio.correo }}</td>
                     <td>{{ duenio.telefono  }}</td>
                     <td>{{ duenio.direccion  }}</td>
-                    {% if is_granted('ROLE_MODERADOR') %}
-                        <td>
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Mascotas
-                                </button>
-                                <ul class="dropdown-menu">
-                                    {% for mascota in duenio.mascota %}
-                                        <li><a class="dropdown-item" href="{{ path('mascota_modificar', {'id': mascota.id}) }}">{{ mascota.nombre }}</a></li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                        </td>                    {% endif %}
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Mascotas
+                            </button>
+                            <ul class="dropdown-menu">
+                                {% for mascota in duenio.mascota %}
+                                    <li><a class="dropdown-item" href="{{ path('mascota_modificar', {'id': mascota.id}) }}">{{ mascota.nombre }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </td>
 
                     {% if is_granted('ROLE_MODERADOR') %}
                         <td><a href="{{ path('duenio_modificar', {'id': duenio.id}) }}" class="btn btn-info">Modificar</a></td>

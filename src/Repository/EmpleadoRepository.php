@@ -47,6 +47,11 @@ class EmpleadoRepository extends ServiceEntityRepository
         }
     }
 
+    public function guardar()
+    {
+        $this->getEntityManager()->flush();
+    }
+
     // /**
     //  * @return Empleado[] Returns an array of Empleado objects
     //  */

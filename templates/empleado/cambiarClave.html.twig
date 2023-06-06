@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>Cambiar contraseña: </h1>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <div class="form-group row">
+        {% if empleado.id %}
+            <div class="col-sm-2">
+                <a href="{{ path('empleado_eliminar', {'id': empleado.id}) }}">
+                    <button type="button" class="btn btn-danger">Eliminar</button>
+                </a>
+            </div>
+        {% else %}
+        {% endif %}
+        <div class="col-sm-10">
+            <a href="{{ path('duenio_listar') }}" class="btn btn-info"><i class="fa fa-arrow-left"></i> Volver</a>
+            <button type="submit" id="modificar_empleado_enviar" name="guardar" class="btn-primary btn">
+                <i class="fa fa-check"></i> Guardar
+            </button>
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+{% endblock %}

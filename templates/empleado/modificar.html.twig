@@ -18,6 +18,11 @@
         <a href="{{ path('empleado_eliminar', {'id': empleado.id}) }}" class="btn btn-danger"><i class="bi bi-trash"></i> Eliminar empleado</a>
     {% endif %}
 
+
+    {% if empleado.id %}
+        <a href="{{ path('empleado_cambiar_clave', {'id': empleado.id}) }}" class="btn btn-outline-info"> Cambiar clave</a>
+    {% endif %}
+
     {{ form_end(form) }}
 
 {% endblock %}
